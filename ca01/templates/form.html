@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{ name }'s page{% endblock title %}
+
+{% block body %}
+
+<p>{ prompt }</p>
+<form action="{ route }" method="POST">
+    <label for="prompt">Prompt: </label>
+    <input type="text" name="prompt" id="prompt">
+    <input type="submit" value="Submit">
+
+</form>
+
+{% endblock body %}

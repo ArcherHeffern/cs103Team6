@@ -1,4 +1,4 @@
-from flask import request,redirect,url_for,Flask, render_template
+from flask import request,redirect,url_for,Flask, render_template, abort
 from gpt import GPT
 import os
 
@@ -13,6 +13,14 @@ def index():
     ''' display a link to the general query page '''
     return render_template("index.html")
 
+@app.route('/api/archer', methods=["GET", "POST"])
+def archer():
+    if request.method == 'GET':
+        return render_template("form.html", name="Archer", prompt="Write a story about a superhero whose power is to turn into a __ whenever they sneeze.", route="/api/archer")
+    elif request.method == "POST":
+        return gptAPI.archers_prompt(request.form['prompt'])
+    else:
+        abort(405)
 # TODO:  
 # a) an about page which explains what your program does
 # b) a "team" page which has a short bio of each member of the team and what their role was
