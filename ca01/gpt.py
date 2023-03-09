@@ -26,6 +26,8 @@ class GPT():
         return response
     
     # Archer's prompt
+    def archers_prompt(self, prompt):
+        return self.__getResponse("Write a story about a superhero whose power is to turn into a {} whenever they sneeze.".format(prompt))
 
     # Paras's prompt
 
