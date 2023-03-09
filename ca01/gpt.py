@@ -32,6 +32,9 @@ class GPT():
     # Kelden's prompt
 
     # Efren's prompt
+    def efren_prompt(self,prompt):
+        response = self.__getResponse(prompt)
+        return prompt,response
 
     # Samir's prompt
 
