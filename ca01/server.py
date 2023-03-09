@@ -35,7 +35,14 @@ def index():
 
 @app.route('/api/efren', methods=['GET', 'POST'])
 def efren():
-    
+    if method == 'GET':
+        return render_template("index.html", )
+    elif method == 'POST':
+        prompt = request.form[inp]
+        gptAPI.efren_prompt(prompt)
+        return render_template("index.html",)
+    else:
+        return 'unknown HTTP method: '+str(request.method)
 
 
 if __name__=='__main__':
