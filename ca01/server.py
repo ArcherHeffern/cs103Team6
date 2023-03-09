@@ -15,10 +15,28 @@ def index():
 
 # TODO:  
 # a) an about page which explains what your program does
+
+@app.route('/about')
+def about():
+
+
+
 # b) a "team" page which has a short bio of each member of the team and what their role was
+@app.route('/team')
+def team():
+    
+
 # c) an index page with links to each of the team-members pages
+@app.route('/index')
+def index():
+    
 
 # d) a form page for each team member which ask the user for some input, then calls the appropriate GPT method to get the response, which it sends back to the browser.
+
+@app.route('/api/efren', methods=['GET', 'POST'])
+def efren():
+    
+
 
 if __name__=='__main__':
     # run the code on port 5001, MacOS uses port 5000 for its own service :(
