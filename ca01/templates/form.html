@@ -1,15 +1,36 @@
 {% extends 'base.html' %}
 
-{% block title %}{ name }'s page{% endblock title %}
+{% block title %}{{ name }}'s page{% endblock title %}
 
 {% block body %}
 
-<p>{ prompt }</p>
-<form action="{ route }" method="POST">
+<p>{{ prompt }}</p>
+<form id="myform" name='myForm' action="{{ route }}" method="POST" autocomplete="off">
     <label for="prompt">Prompt: </label>
-    <input type="text" name="prompt" id="prompt">
+    <input type="text" name="prompt" id="prompt" required>
     <input type="submit" value="Submit">
-
 </form>
+<p id="textbox"></p>
 
-{% endblock body %}
+
+<script>
+    let textBox = document.getElementById('textbox');
+    let form = document.getElementById('myform')
+
+    let handleSubmit = async (e) => {
+        e.preventDefault();
+        textbox.innerHTML = "loading..."
+        let formData = new FormData();
+        formData.append('prompt', document.forms["myForm"]["prompt"].value);
+        let res = await fetch("{{ route }}",
+        {
+                body: formData,
+                method: "post"
+            })
+        let resText = await res.text()
+        textBox.innerHTML=resText;
+    }
+
+    form.addEventListener('submit', (e) => handleSubmit(e))
+</script>
+    {% endblock body %}
