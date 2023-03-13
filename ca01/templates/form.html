@@ -3,7 +3,7 @@
 {% block title %}{{ name }}'s page{% endblock title %}
 
 {% block body %}
-
+<h1>{{ name }}'s Prompt Page</h1>
 <p>{{ prompt }}</p>
 <form id="myform" name='myForm' action="{{ route }}" method="POST" autocomplete="off">
     <label for="prompt">Prompt: </label>

@@ -41,23 +41,21 @@ def archer():
 @app.route('/efren', methods=['GET', 'POST'])
 def efren():
     if request.method == 'GET':
-        return render_template("index.html", )
+        return render_template("form.html", name='Efren', prompt="what is your prompt efren?", route='/efren')
     elif request.method == 'POST':
-        prompt = request.form['prompt']
-        gptAPI.efren_prompt(prompt)
-        return render_template("form.html", name='Efren', prompt=prompt, route='/efren')
+        return gptAPI.efren_prompt(request.form['prompt'])
     else:
         abort(405)
 
-# @app.route('paras', methods=["GET", "POST"])
+# @app.route('/paras', methods=["GET", "POST"])
 # def paras():
 #     pass
 
-# @app.route('samir', methods=["GET", "POST"])
+# @app.route('/samir', methods=["GET", "POST"])
 # def paras():
 #     pass
 
-# @app.route('kelden', methods=["GET", "POST"])
+# @app.route('/kelden', methods=["GET", "POST"])
 # def paras():
 #     pass
 
