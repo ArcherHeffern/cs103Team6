@@ -33,7 +33,8 @@ def archer():
     if request.method == 'GET':
         return render_template("form.html", name="Archer", prompt="Write a story about a superhero whose power is to turn into a __ whenever they sneeze.", route="/archer")
     elif request.method == "POST":
-        return gptAPI.archers_prompt(request.form['prompt'])
+        res = gptAPI.archers_prompt(request.form['prompt'])
+        return (res[0], 500) if res[1] else (res[0], 200)
     else:
         abort(405)
 

@@ -12,18 +12,22 @@ class GPT():
         self.model_engine = "text-davinci-003"
 
     def __getResponse(self,prompt):
-        ''' Generate a GPT response '''
-        completion = openai.Completion.create(
-            engine=self.model_engine,
-            prompt=prompt,
-            max_tokens=1024,
-            n=1,
-            stop=None,
-            temperature=0.8,
-        )
+        ''' Generate a GPT response
+         returns a tuple with the response, and a status code. 0 if success, 1 if error '''
+        try:
+            completion = openai.Completion.create(
+                engine=self.model_engine,
+                prompt=prompt,
+                max_tokens=1024,
+                n=1,
+                stop=None,
+                temperature=0.8,
+            )
 
-        response = completion.choices[0].text
-        return response
+            response = completion.choices[0].text
+        except Exception:
+            return "Server side error, please try again later. ", 1
+        return response, 0
     
     # Archer's prompt
     def archers_prompt(self, prompt):
