@@ -34,9 +34,12 @@ class GPT():
         return self.__getResponse("Write a story about a superhero whose power is to turn into a {} whenever they sneeze.".format(prompt))
 
     # Paras's prompt
+    def paras_prompt(self, prompt):
+        return self.__getResponse("which tv show or movie does this character belong to".format(prompt))
+
 
     # Kelden's prompt
-
+    
     # Efren's prompt
     def efren_prompt(self,prompt):
         response = self.__getResponse(prompt)
