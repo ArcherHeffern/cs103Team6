@@ -1,4 +1,4 @@
-from flask import request,redirect,url_for,Flask, render_template, abort
+from flask import request,redirect,url_for,Flask, render_template, abort, send_from_directory
 from gpt import GPT
 import os
 from dotenv import load_dotenv
@@ -42,7 +42,7 @@ def archer():
 @app.route('/efren', methods=['GET', 'POST'])
 def efren():
     if request.method == 'GET':
-        return render_template("form.html", name='Efren', prompt="what is your prompt efren?", route='/efren')
+        return render_template("form.html", name='j Efren', prompt="what is your prompt efren?", route='/efren')
     elif request.method == 'POST':
         return gptAPI.efren_prompt(request.form['prompt'])
     else:
@@ -59,6 +59,10 @@ def efren():
 # @app.route('/kelden', methods=["GET", "POST"])
 # def paras():
 #     pass
+
+@app.route('/<path:path>')
+def styles(path):
+    return send_from_directory('static', path)
 
 if __name__=='__main__':
     # run the code on port 5001, MacOS uses port 5000 for its own service :(
