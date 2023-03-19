@@ -39,6 +39,8 @@ class GPT():
 
 
     # Kelden's prompt
+    def kelden_prompt(self, prompt):
+        return self.__getResponse("Write a fairytale about a perrson named {} that is a {}".format(prompt))
     
     # Efren's prompt
     def efren_prompt(self,prompt):
