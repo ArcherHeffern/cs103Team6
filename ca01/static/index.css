@@ -55,10 +55,6 @@ main {
     justify-content: center;
 }
 
-#user {
-    width: 300px;
-}
-
 button {
     border-radius: 8px;
     border: 1px solid transparent;
