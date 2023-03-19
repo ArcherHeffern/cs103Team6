@@ -52,7 +52,7 @@ def efren():
 @app.route('/paras', methods=['GET', 'POST'])
 def paras():
     if request.method == 'GET':
-        return render_template("form.html", name='paras', prompt="who is the main character", route='/paras')
+        return render_template("form.html", name='paras', prompt="write a movie about someone named", route='/paras')
     elif request.method == 'POST':
         res = gptAPI.paras_prompt(request.form['prompt'])
         return (res[0], 500) if res[1] else (res[0], 200)
