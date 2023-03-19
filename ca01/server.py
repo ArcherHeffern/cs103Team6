@@ -59,9 +59,14 @@ def paras():
     else:
         abort(405)
 
-# @app.route('/samir', methods=["GET", "POST"])
-# def paras():
-#     pass
+@app.route('/samir', methods=["GET", "POST"])
+def samir():
+     if request.method == 'GET':
+        return render_template("form.html", name='Samir', prompt="Create an acronym for the word __.", route='/samir')
+     elif request.method == 'POST':
+        return gptAPI.samir_prompt(request.form['prompt'])
+     else:
+         abort(405)
 
 @app.route('/kelden', methods=["GET", "POST"])
 def kelden():
