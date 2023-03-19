@@ -35,7 +35,7 @@ class GPT():
 
     # Paras's prompt
     def paras_prompt(self, prompt):
-        return self.__getResponse("which tv show or movie does this character belong to".format(prompt))
+        return self.__getResponse("which tv show or movie are they form {}".format(prompt))
 
 
     # Kelden's prompt
