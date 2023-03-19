@@ -63,9 +63,14 @@ def paras():
 # def paras():
 #     pass
 
-# @app.route('/kelden', methods=["GET", "POST"])
-# def paras():
-#     pass
+@app.route('/kelden', methods=["GET", "POST"])
+def kelden():
+    if request.method == 'GET':
+        return render_template("form.html", name='Kelden', prompt="Write a fairytale about a person named __ who is a __.", route='/kelden')
+    elif request.method == 'POST':
+        return gptAPI.kelden_prompt(request.form['prompt'])
+    else:
+        abort(405)
 
 @app.route('/<path:path>')
 def styles(path):
