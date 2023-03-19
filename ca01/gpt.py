@@ -42,7 +42,7 @@ class GPT():
     
     # Efren's prompt
     def efren_prompt(self,prompt):
-        response = self.__getResponse(prompt)
+        response = self.__getResponse("Write a poem about a person named {} living in a city {} who likes to {}.format(prompt))
         return prompt,response
 
     # Samir's prompt
