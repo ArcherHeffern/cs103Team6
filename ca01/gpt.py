@@ -25,8 +25,8 @@ class GPT():
             )
 
             response = completion.choices[0].text
-        except Exception:
-            return "Server side error, please try again later. ", 1
+        except Exception as e:
+            return "Server side error, please try again later\n{}".format(e), 1
         return response, 0
     
     # Archer's prompt
@@ -35,7 +35,7 @@ class GPT():
 
     # Paras's prompt
     def paras_prompt(self, prompt):
-        return self.__getResponse("which tv show or movie are they form {}".format(prompt))
+        return self.__getResponse("Invent a movie about someone named {}".format(prompt))
 
 
     # Kelden's prompt

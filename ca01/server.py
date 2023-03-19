@@ -54,7 +54,8 @@ def paras():
     if request.method == 'GET':
         return render_template("form.html", name='paras', prompt="who is the main character", route='/paras')
     elif request.method == 'POST':
-        return gptAPI.paras_prompt(request.form['prompt'])
+        res = gptAPI.paras_prompt(request.form['prompt'])
+        return (res[0], 500) if res[1] else (res[0], 200)
     else:
         abort(405)
 
