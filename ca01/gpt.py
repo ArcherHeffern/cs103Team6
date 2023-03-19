@@ -48,6 +48,9 @@ class GPT():
         return response
 
     # Samir's prompt
+    def samir_prompt(self, prompt):
+        response = self.__getResponse("Create an acronym for the word {}.".format(prompt))
+        return response
 
 if __name__=='__main__':
     import os
