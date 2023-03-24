@@ -1,4 +1,4 @@
 import transaction
 import pytest
 
-def test_
+def test_get_categories():
