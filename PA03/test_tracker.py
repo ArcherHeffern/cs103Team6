@@ -8,7 +8,7 @@ def db(tmp_path):
     yield tmp_path / 'test.db'
 
 @pytest.fixture
-def sample_data():
+def sample_data() -> tuple:
     """Sample data for transactions and catagories"""
     return  ([("15b",), ("35z",), ("17a",)] ,[(35, 1, 2003, 5, 7, "Bought big potato from store"), (2, 3, 2021, 3, 20, "A stick of gum"), (4, 2, 2003, 7, 8, "new house")])
 
@@ -32,17 +32,21 @@ def db_connect(db, sample_data):
 
 
 
-def test_get_catagory(db_connect: Transaction, sample_data):
+def test_get_catagory(db_connect: Transaction, sample_data: tuple):
     transaction = db_connect
-    assert transaction.get_catagories() == [(i+1, data[0]) for i, data in enumerate(sample_data[0])]
+    assert transaction.get_categories() == [(i+1, data[0]) for i, data in enumerate(sample_data[0])]
 
 
-def test_post_catagory():
-    pass
+def test_post_catagory(db_connect: Transaction, sample_data: tuple):
+    new_cat_name = "dfff3"
+    db_connect.create_category(new_cat_name)
+    assert db_connect.get_categories()[-1] == (len(sample_data) + 1, new_cat_name)
 
 
-def test_update_catagory():
-    pass
+def test_update_catagory(db_connect: Transaction, sample_data: tuple):
+    new_cat_name = "dfff3"
+    db_connect.update_category(new_cat_name)
+    assert db_connect.get_categories()[-1] == (len(sample_data) + 1, new_cat_name)
 
 
 def test_show_transactions():
@@ -71,3 +75,4 @@ def get_transactions_by_year():
 
 def get_transactions_by_catagory():
     pass
+
