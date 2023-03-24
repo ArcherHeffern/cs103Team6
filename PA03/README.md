@@ -1,9 +1,9 @@
-#Run the following commands: 
+# Run the following commands: 
 ```bash
 pip install pylint pytest
 ```
 
-
+# Project Description
 PA03 - finance tracker - using SQL, pytest, and pylint
 
 Motivation
