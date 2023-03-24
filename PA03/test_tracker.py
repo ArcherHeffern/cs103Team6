@@ -49,9 +49,9 @@ def test_update_catagory(db_connect: Transaction, sample_data: tuple):
     assert db_connect.get_categories()[-1] == (len(sample_data) + 1, new_cat_name)
 
 
-def test_show_transactions():
-    pass
-
+def test_show_transactions(db_connect: Transaction, sample_data: tuple):
+    transactions = tuple(db_connect.get_transactions())
+    assert transactions == sample_data
 
 def test_add_transactions():
     pass
