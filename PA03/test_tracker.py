@@ -34,7 +34,7 @@ def db_connect(db, sample_data):
 
 def test_get_catagory(db_connect: Transaction, sample_data):
     transaction = db_connect
-    assert transaction.get_catagories() == sample_data[0]
+    assert transaction.get_catagories() == [(i+1, data[0]) for i, data in enumerate(sample_data[0])]
 
 
 def test_post_catagory():

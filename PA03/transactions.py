@@ -13,11 +13,14 @@ class Transaction():
 
     def get_catagories(self):
         """Gets all catagories"""
-        return self.runQuery("SELECT * FROM category;", ())
+        return self.runQuery("SELECT rowid, * FROM category;", ())
 
     def create_catagory(self, catagory: str):
         """Creates a catagory"""
         self.runQuery("INSERT INTO category values (?)", (catagory))
+
+    def update_catagory(self, catagory_id: str):
+        pass
 
     def runQuery(self, query, tuple):
         con = sqlite3.connect(self.url)
