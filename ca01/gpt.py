@@ -25,8 +25,8 @@ class GPT():
             )
 
             response = completion.choices[0].text
-        except Exception:
-            return "Server side error, please try again later. ", 1
+        except Exception as e:
+            return "Server side error, please try again later\n{}".format(e), 1
         return response, 0
     
     # Archer's prompt
@@ -34,17 +34,25 @@ class GPT():
         return self.__getResponse("Write a story about a superhero whose power is to turn into a {} whenever they sneeze.".format(prompt))
 
     # Paras's prompt
+    def paras_prompt(self, prompt):
+        return self.__getResponse("Invent a movie about someone named {}".format(prompt))
+
 
     # Kelden's prompt
-
+    def kelden_prompt(self, prompt):
+        return self.__getResponse("Write a birthday letter to a person named {}".format(prompt))
+    
     # Efren's prompt
     def efren_prompt(self,prompt):
-        response = self.__getResponse(prompt)
-        return prompt,response
+        response = self.__getResponse("Write a poem about a person named {} living in a city {} who likes to {}".format(prompt))
+        return response
 
     # Samir's prompt
+    def samir_prompt(self, prompt):
+        response = self.__getResponse("Create an acronym for the word {}.".format(prompt))
+        return response
 
 if __name__=='__main__':
     import os
-    g = GPT(os.environ.get("APIKEY"))
+    g = GPT(os.environ.get("API_KEY"))
     print(g._GPT__getResponse("what does openai's GPT stand for?"))

@@ -42,23 +42,40 @@ def archer():
 @app.route('/efren', methods=['GET', 'POST'])
 def efren():
     if request.method == 'GET':
-        return render_template("form.html", name='j Efren', prompt="what is your prompt efren?", route='/efren')
+        return render_template("form.html", name='Efren', prompt="Write a poem about a person named __ living in a city __ who likes to __.", route='/efren')
     elif request.method == 'POST':
         return gptAPI.efren_prompt(request.form['prompt'])
     else:
         abort(405)
 
-# @app.route('/paras', methods=["GET", "POST"])
-# def paras():
-#     pass
 
-# @app.route('/samir', methods=["GET", "POST"])
-# def paras():
-#     pass
+@app.route('/paras', methods=['GET', 'POST'])
+def paras():
+    if request.method == 'GET':
+        return render_template("form.html", name='paras', prompt="who is the main character", route='/paras')
+    elif request.method == 'POST':
+        res = gptAPI.paras_prompt(request.form['prompt'])
+        return (res[0], 500) if res[1] else (res[0], 200)
+    else:
+        abort(405)
 
-# @app.route('/kelden', methods=["GET", "POST"])
-# def paras():
-#     pass
+@app.route('/samir', methods=["GET", "POST"])
+def samir():
+     if request.method == 'GET':
+        return render_template("form.html", name='Samir', prompt="Create an acronym for the word __.", route='/samir')
+     elif request.method == 'POST':
+        return gptAPI.samir_prompt(request.form['prompt'])
+     else:
+         abort(405)
+
+@app.route('/kelden', methods=["GET", "POST"])
+def kelden():
+    if request.method == 'GET':
+        return render_template("form.html", name='Kelden', prompt="Write a birthday letter to a person named __.", route='/kelden')
+    elif request.method == 'POST':
+        return gptAPI.kelden_prompt(request.form['prompt'])
+    else:
+        abort(405)
 
 @app.route('/<path:path>')
 def styles(path):
@@ -66,4 +83,4 @@ def styles(path):
 
 if __name__=='__main__':
     # run the code on port 5001, MacOS uses port 5000 for its own service :(
-    app.run(debug=True,port=5001)
+    app.run(debug=True,port=5002)

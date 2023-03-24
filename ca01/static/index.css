@@ -55,10 +55,13 @@ main {
     justify-content: center;
 }
 
+<<<<<<< HEAD
 #user {
     width: 700px;
 }
 
+=======
+>>>>>>> c41a04c42b1527d6d7856e134c42f926827baca8
 button {
     border-radius: 8px;
     border: 1px solid transparent;
@@ -98,4 +101,9 @@ h1 {
 
 p {
     max-width:  700px;
+    text-align: left;
+}
+
+#user {
+  width: 700px;
 }
