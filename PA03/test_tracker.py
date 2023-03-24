@@ -53,10 +53,10 @@ def test_show_transactions(db_connect: Transaction, sample_data: tuple):
     transactions = tuple(db_connect.get_transactions())
     assert transactions == sample_data
 
-def test_add_transactions(db_connect: Transaction, sample_data: tuple):
+def test_add_transactions(db_connect: Transaction):
     new_transaction = {
         'amount' : 40,
-        'category' : 32,
+        'category_id' : 32,
         'year' : 2005,
         'month' : 12,
         'day' : 1,
@@ -67,8 +67,10 @@ def test_add_transactions(db_connect: Transaction, sample_data: tuple):
     assert dict(transactions[len(transactions)-1]) == new_transaction
 
 
-def test_delete_transactions():
-    pass
+def test_delete_transactions(db_connect : transaction, sample_data : tuple):
+    db_connect.delete_transaction(32)
+    transactions = tuple(db_connect.get_transactions())
+    assert transactions == sample_data
 
 
 def get_transactions_by_date():
