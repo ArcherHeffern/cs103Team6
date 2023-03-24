@@ -60,7 +60,7 @@ def test_add_transactions(db_connect: Transaction, sample_data: tuple):
         'year' : 2005,
         'month' : 12,
         'day' : 1,
-        'description : 'I bought a cat'
+        'description' : 'I bought a cat'
     }
     db_connect.create_transaction(new_transaction)
     transactions = tuple(db_connect.get_transactions())
