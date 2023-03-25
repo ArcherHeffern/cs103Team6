@@ -17,7 +17,7 @@ def db_connect(db, sample_data):
     """Init db connection, and create test data"""
     con = sqlite3.connect(db)
     cur = con.cursor()
-    cur.execute("CREATE TABLE IF NOT EXISTS transactions (amount int, category int, year int, month int, day int, description varchar(50));")
+    cur.execute("CREATE TABLE IF NOT EXISTS transactions (amount int, category_id int, year int, month int, day int, description varchar(50));")
     cur.execute("CREATE TABLE IF NOT EXISTS category (name varchar(10) UNIQUE NOT NULL);")
     cur.executemany("INSERT INTO category VALUES (?);", sample_data[0])
     cur.executemany("INSERT INTO transactions VALUES (?, ?, ?, ?, ?, ?);", sample_data[1])
@@ -51,27 +51,18 @@ def test_update_catagory(db_connect: Transaction, sample_data: tuple):
 
 
 def test_show_transactions(db_connect: Transaction, sample_data: tuple):
-    transactions = tuple(db_connect.get_transactions())
-    assert transactions == sample_data
+    transactions = db_connect.get_transactions()
+    assert transactions == [(i+1,) + (data) for i, data in enumerate(sample_data[1])]
 
-def test_add_transactions(db_connect: Transaction):
-    new_transaction = {
-        'amount' : 40,
-        'category_id' : 32,
-        'year' : 2005,
-        'month' : 12,
-        'day' : 1,
-        'description' : 'I bought a cat'
-    }
+def test_add_transactions(db_connect: Transaction, sample_data):
+    new_transaction = ( 40, 3, 2005, 12, 1, "I bought a cat!")
     db_connect.create_transaction(new_transaction)
-    transactions = tuple(db_connect.get_transactions())
-    assert dict(transactions[len(transactions)-1]) == new_transaction
+    assert db_connect.get_transactions()[-1] == (len(sample_data[1])+1,) + new_transaction
 
 
-def test_delete_transactions(db_connect : transaction, sample_data : tuple):
-    db_connect.delete_transaction(32)
-    transactions = tuple(db_connect.get_transactions())
-    assert transactions == sample_data
+def test_delete_transactions(db_connect : Transaction, sample_data : tuple):
+    db_connect.delete_transaction(3)
+    assert db_connect.get_transactions() == [(i+1,) + (data) for i, data in enumerate(sample_data[1][:-1])]
 
 
 def get_transactions_by_date(db_connect: Transaction, sample_data: tuple):

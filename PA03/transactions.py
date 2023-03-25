@@ -33,9 +33,9 @@ class Transaction():
         self.run_query("UPDATE category SET name=(?) WHERE rowid=(?)", (newname, catagory_id))
 
 
-    def get_transaction(self):
+    def get_transactions(self):
         """Gets all transactions"""
-        return self.run_query("SELECT * FROM transactions;", ())
+        return self.run_query("SELECT rowid, * FROM transactions;", ())
 
 
     def get_transactions_by_year(self):
@@ -50,22 +50,22 @@ class Transaction():
 
     def get_transaction_by_day(self):
         """Gets transactions ordered by day descending"""
-        return self.run_query("SELECT * FROM transactions ORDER BY DAY DEC;", ())
+        return self.run_query("SELECT rowid, * FROM transactions ORDER BY DAY DEC;", ())
 
 
-    def create_transaction(self, transaction: dict):
+    def create_transaction(self, transaction: tuple):
         """Creates new Transaction: Takes dict with all transaction values as input"""
         if len(transaction) == 6:
             self.run_query("""
             INSERT INTO transactions VALUES (
                 ?, ?, ?, ?, ?, ?
                 )
-                """, (v for v in transaction))
+                """, transaction)
 
 
     def delete_transaction(self, category_id):
-        """Deletes transaction by category_id"""
-        self.run_query("DELETE FROM transactions WHERE category_id=(?)", (transaction_id,))
+        """Deletes transaction by rowid"""
+        self.run_query("DELETE FROM transactions WHERE rowid=(?)", (category_id,))
 
 
     def run_query(self, query, tuples):
