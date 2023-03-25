@@ -51,15 +51,27 @@ def test_update_catagory(db_connect: Transaction, sample_data: tuple):
 
 
 def test_show_transactions(db_connect: Transaction, sample_data: tuple):
-    pass
+    transactions = tuple(db_connect.get_transactions())
+    assert transactions == sample_data
+
+def test_add_transactions(db_connect: Transaction):
+    new_transaction = {
+        'amount' : 40,
+        'category_id' : 32,
+        'year' : 2005,
+        'month' : 12,
+        'day' : 1,
+        'description' : 'I bought a cat'
+    }
+    db_connect.create_transaction(new_transaction)
+    transactions = tuple(db_connect.get_transactions())
+    assert dict(transactions[len(transactions)-1]) == new_transaction
 
 
-def test_add_transactions(db_connect: Transaction, sample_data: tuple):
-    pass
-
-
-def test_delete_transactions(db_connect: Transaction, sample_data: tuple):
-    pass
+def test_delete_transactions(db_connect : transaction, sample_data : tuple):
+    db_connect.delete_transaction(32)
+    transactions = tuple(db_connect.get_transactions())
+    assert transactions == sample_data
 
 
 def get_transactions_by_date(db_connect: Transaction, sample_data: tuple):

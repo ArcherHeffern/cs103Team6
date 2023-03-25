@@ -63,9 +63,9 @@ class Transaction():
                 """, (v for v in transaction))
 
 
-    def delete_transaction(self, transaction_id):
-        """Deletes transaction by transaction_id"""
-        self.run_query("DELETE FROM transactions WHERE rowid=(?)", (transaction_id,))
+    def delete_transaction(self, category_id):
+        """Deletes transaction by category_id"""
+        self.run_query("DELETE FROM transactions WHERE category_id=(?)", (transaction_id,))
 
 
     def run_query(self, query, tuples):
