@@ -18,7 +18,7 @@ def db_connect(db, sample_data):
     con = sqlite3.connect(db)
     cur = con.cursor()
     cur.execute("CREATE TABLE IF NOT EXISTS transactions (amount int, category int, year int, month int, day int, description varchar(50));")
-    cur.execute("CREATE TABLE IF NOT EXISTS category (category varchar(10));")
+    cur.execute("CREATE TABLE IF NOT EXISTS category (name varchar(10) UNIQUE NOT NULL);")
     cur.executemany("INSERT INTO category VALUES (?);", sample_data[0])
     cur.executemany("INSERT INTO transactions VALUES (?, ?, ?, ?, ?, ?);", sample_data[1])
     con.commit()
@@ -40,39 +40,40 @@ def test_get_catagory(db_connect: Transaction, sample_data: tuple):
 def test_post_catagory(db_connect: Transaction, sample_data: tuple):
     new_cat_name = "dfff3"
     db_connect.create_category(new_cat_name)
-    assert db_connect.get_categories()[-1] == (len(sample_data) + 1, new_cat_name)
+    assert db_connect.get_categories()[-1] == (len(sample_data[0]) + 1, new_cat_name)
 
 
 def test_update_catagory(db_connect: Transaction, sample_data: tuple):
     new_cat_name = "dfff3"
-    db_connect.update_category(new_cat_name)
-    assert db_connect.get_categories()[-1] == (len(sample_data) + 1, new_cat_name)
+    rowid = 3
+    db_connect.update_category(new_cat_name, rowid)
+    assert db_connect.get_categories()[-1] == (len(sample_data[0]), new_cat_name)
 
 
-def test_show_transactions():
+def test_show_transactions(db_connect: Transaction, sample_data: tuple):
     pass
 
 
-def test_add_transactions():
+def test_add_transactions(db_connect: Transaction, sample_data: tuple):
     pass
 
 
-def test_delete_transactions():
+def test_delete_transactions(db_connect: Transaction, sample_data: tuple):
     pass
 
 
-def get_transactions_by_date():
+def get_transactions_by_date(db_connect: Transaction, sample_data: tuple):
     pass
 
 
-def get_transactions_by_month():
+def get_transactions_by_month(db_connect: Transaction, sample_data: tuple):
     pass
 
 
-def get_transactions_by_year():
+def get_transactions_by_year(db_connect: Transaction, sample_data: tuple):
     pass
 
 
-def get_transactions_by_catagory():
+def get_transactions_by_catagory(db_connect: Transaction, sample_data: tuple):
     pass
 

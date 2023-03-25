@@ -25,12 +25,12 @@ class Transaction():
 
     def create_category(self, catagory: str):
         """Creates a catagory"""
-        self.run_query("INSERT INTO category values (?)", (catagory))
+        self.run_query("INSERT INTO category values (?)", (catagory,))
 
 
-    def update_category(self, catagory_id: str):
+    def update_category(self, newname: str, catagory_id: int):
         """Updates a catagory"""
-        self.run_query("UPDATE catagory SET name=(?)", (catagory_id))
+        self.run_query("UPDATE category SET name=(?) WHERE rowid=(?)", (newname, catagory_id))
 
 
     def get_transaction(self):
@@ -72,4 +72,6 @@ class Transaction():
         """Runs a query"""
         con = sqlite3.connect(self.url)
         cur = con.cursor()
-        return cur.execute(query, tuples).fetchall()
+        values = cur.execute(query, tuples).fetchall()
+        con.commit()
+        return values
