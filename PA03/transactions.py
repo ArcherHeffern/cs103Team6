@@ -54,7 +54,7 @@ class Transaction():
 
 
     def create_transaction(self, transaction: tuple):
-        """Creates new Transaction: Takes dict with all transaction values as input"""
+        """Creates new Transaction: Takes tuple with all transaction values as input"""
         if len(transaction) == 6:
             self.run_query("""
             INSERT INTO transactions VALUES (
