@@ -8,8 +8,8 @@ class Transaction():
         self.url = url
         if debug:
             # drop all tables
-            self.run_query("TRUNCATE TABLE IF EXISTS transactions;", ())
-            self.run_query("TRUNCATE TABLE IF EXISTS category;", ())
+            self.run_query("DROP TABLE IF EXISTS transactions;", ())
+            self.run_query("DROP TABLE IF EXISTS category;", ())
         self.run_query("""CREATE TABLE IF NOT EXISTS transactions (
             amount int, category_id int, year int, month int, day int, description varchar(50));
             """, ())

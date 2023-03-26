@@ -15,26 +15,18 @@ def sample_data() -> tuple:
 @pytest.fixture(autouse=True)
 def db_connect(db, sample_data):
     """Init db connection, and create test data"""
-    con = sqlite3.connect(db)
-    cur = con.cursor()
-    cur.execute("CREATE TABLE IF NOT EXISTS transactions (amount int, category_id int, year int, month int, day int, description varchar(50));")
-    cur.execute("CREATE TABLE IF NOT EXISTS category (name varchar(10) UNIQUE NOT NULL);")
-    cur.executemany("INSERT INTO category VALUES (?);", sample_data[0])
-    cur.executemany("INSERT INTO transactions VALUES (?, ?, ?, ?, ?, ?);", sample_data[1])
-    con.commit()
-    transaction = Transaction(url=db)
+    transaction: Transaction = Transaction(url=db, debug=True)
+    for item in sample_data[0]:
+        transaction.run_query("INSERT INTO category VALUES (?);", item)
+    for item in sample_data[1]:
+        transaction.run_query("INSERT INTO transactions VALUES (?, ?, ?, ?, ?, ?);", item)
     yield transaction
-    cur.execute("DROP TABLE category")
-    cur.execute("DROP TABLE transactions")
-    con.commit()
-    cur.close()
-    con.close()
-
+    transaction.run_query("DROP TABLE IF EXISTS transactions;", ())
+    transaction.run_query("DROP TABLE IF EXISTS category;", ())
 
 
 def test_get_catagory(db_connect: Transaction, sample_data: tuple):
-    transaction = db_connect
-    assert transaction.get_categories() == [(i+1, data[0]) for i, data in enumerate(sample_data[0])]
+    assert db_connect.get_categories() == [(i+1, data[0]) for i, data in enumerate(sample_data[0])]
 
 
 def test_post_catagory(db_connect: Transaction, sample_data: tuple):
