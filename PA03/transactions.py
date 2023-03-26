@@ -67,6 +67,7 @@ class Transaction():
         """Deletes transaction by rowid"""
         self.run_query("DELETE FROM transactions WHERE rowid=(?)", (category_id,))
 
+# delete all transactions by catagory
 
     def run_query(self, query, tuples):
         """Runs a query"""
