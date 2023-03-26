@@ -31,21 +31,31 @@ def allocate_jobs(file: str):
     while True:
         task = get_job_request()
         if task == 0:
-            print(dbconn.get_categories())
+            break
         elif task == 1:
+            print(dbconn.get_categories())
+        elif task == 2:
             category = input("Enter a name for the category here: ")
             dbconn.create_category()
-        elif task == 2:
-            category = input("Enter a category here: ")
-            dbconn.
         elif task == 3:
-            
+            category = input("Enter a category here: ")
+            category_id = dbconn.get_category_id(category)
+            new_name = input("Enter a new name for the category here: ")
+            dbconn.update_category(new_name,category_id)
         elif task == 4:
             print(dbconn.get_transactions())
         elif task == 5:
-            
+            amount = int(input("Enter amount here: ")
+            category_id = dbconn.get_category_id(input("Enter category name here: ")
+            year = int(input("Enter year here: ")
+            month = int(input("Enter month here: ")
+            day = int(input("Enter day here: ")
+            description = input("Enter a description here: ")
+            new_transaction = (amount,category_id,year,month,day,description)
+            dbconn.create_transaction(new_transaction)
         elif task == 6:
-            
+            category = input("Enter the category to be deleted here: ")
+            dbconn.delete_transaction()
         elif task == 7:
             print(dbconn.get_transactions_by_day())
         elif task == 8:
