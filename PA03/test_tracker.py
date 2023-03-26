@@ -66,11 +66,14 @@ def test_delete_transactions(db_connect : Transaction, sample_data : tuple):
 
 
 def get_transactions_by_date(db_connect: Transaction, sample_data: tuple):
-    pass
-
+    day = db_connect.get_transaction_by_day()
+    orderedData = ([(35, 1, 2003, 5, 7, "Bought big potato from store"), (2, 3, 2021, 3, 20, "A stick of gum"), (4, 2, 2003, 7, 8, "new house")])
+    assert day == [(i+1,) + (data) for i, data in enumerate(orderedData[1][:-2])]
 
 def get_transactions_by_month(db_connect: Transaction, sample_data: tuple):
-    pass
+    month = db_connect.get_transactions_by_month()
+    orderedMonth = ([(35, 1, 2003, 5, 7, "Bought big potato from store"), (2, 3, 2021, 3, 20, "A stick of gum"), (4, 2, 2003, 7, 8, "new house")])
+    assert month == [(i+1,) + (data) for i, data in enumerate(orderedMonth[1][:-3])]
 
 
 def get_transactions_by_year(db_connect: Transaction, sample_data: tuple):

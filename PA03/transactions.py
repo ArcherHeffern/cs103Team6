@@ -23,14 +23,14 @@ class Transaction():
         return self.run_query("SELECT rowid, * FROM category;", ())
 
 
-    def create_category(self, catagory: str):
-        """Creates a catagory"""
-        self.run_query("INSERT INTO category values (?)", (catagory,))
+    def create_category(self, category: str):
+        """Creates a category"""
+        self.run_query("INSERT INTO category values (?)", (category,))
 
 
-    def update_category(self, newname: str, catagory_id: int):
-        """Updates a catagory"""
-        self.run_query("UPDATE category SET name=(?) WHERE rowid=(?)", (newname, catagory_id))
+    def update_category(self, newname: str, category_id: int):
+        """Updates a category"""
+        self.run_query("UPDATE category SET name=(?) WHERE rowid=(?)", (newname, category_id))
 
 
     def get_transactions(self):
@@ -48,20 +48,27 @@ class Transaction():
         return self.run_query("SELECT * FROM transactions ORDER BY MONTH, DAY DEC;", ())
 
 
-    def get_transaction_by_day(self):
+    def get_transactions_by_day(self):
         """Gets transactions ordered by day descending"""
         return self.run_query("SELECT rowid, * FROM transactions ORDER BY DAY DEC;", ())
 
+    def get_transactions_by_category(self, category: str):
+        """get transaction information for specific category name""""
+        category_id = self.get_category_id(category)
+        return self.run_query("SELECT * FROM transactions WHERE rowid = (?)", (category_id,))
 
     def create_transaction(self, transaction: tuple):
-        """Creates new Transaction: Takes dict with all transaction values as input"""
+        """Creates new Transaction: Takes tuple with all transaction values as input"""
         if len(transaction) == 6:
             self.run_query("""
             INSERT INTO transactions VALUES (
                 ?, ?, ?, ?, ?, ?
                 )
                 """, transaction)
-
+    
+    def get_category_id(self,category: str):
+        """Get the rowid for a specified category"""
+        return self.run_query("SELECT rowid FROM Customers WHERE ContactName = (?)", (category,)) ;
 
     def delete_transaction(self, category_id):
         """Deletes transaction by rowid"""
