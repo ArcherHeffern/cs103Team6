@@ -45,11 +45,11 @@ def allocate_jobs(file: str):
         elif task == 4:
             print(dbconn.get_transactions())
         elif task == 5:
-            amount = int(input("Enter amount here: ")
-            category_id = dbconn.get_category_id(input("Enter category name here: ")
-            year = int(input("Enter year here: ")
-            month = int(input("Enter month here: ")
-            day = int(input("Enter day here: ")
+            amount = int(input("Enter amount here: "))
+            category_id = dbconn.get_category_id(input("Enter category name here: "))
+            year = int(input("Enter year here: "))
+            month = int(input("Enter month here: "))
+            day = int(input("Enter day here: "))
             description = input("Enter a description here: ")
             new_transaction = (amount,category_id,year,month,day,description)
             dbconn.create_transaction(new_transaction)
