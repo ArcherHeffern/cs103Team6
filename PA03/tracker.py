@@ -1,4 +1,4 @@
-from transactions import transaction
+from transactions import Transaction
 
 def print_job_menu():
     """print available jobs prompt"""
@@ -26,8 +26,8 @@ def get_job_request() -> int:
             return usr
     return -1
 
-def allocate_jobs(file: str):
-    dbconn = Transaction(url = file)
+def allocate_jobs():
+    dbconn = Transaction()
     while True:
         task = get_job_request()
         if task == 0:
@@ -36,7 +36,7 @@ def allocate_jobs(file: str):
             print(dbconn.get_categories())
         elif task == 2:
             category = input("Enter a name for the category here: ")
-            dbconn.create_category()
+            dbconn.create_category(category)
         elif task == 3:
             category = input("Enter a category here: ")
             category_id = dbconn.get_category_id(category)
@@ -54,8 +54,8 @@ def allocate_jobs(file: str):
             new_transaction = (amount,category_id,year,month,day,description)
             dbconn.create_transaction(new_transaction)
         elif task == 6:
-            category = input("Enter the category to be deleted here: ")
-            dbconn.delete_transaction()
+            tranaction = input("Enter the transaction to be deleted here: ")
+            dbconn.delete_transaction(tranaction)
         elif task == 7:
             print(dbconn.get_transactions_by_day())
         elif task == 8:
@@ -76,8 +76,7 @@ main method
             
 if __name__ == '__main__':
     print_job_menu()
-    file = input("Enter database name here: ")
-    allocate_jobs(file)
+    allocate_jobs()
     
         
                 
