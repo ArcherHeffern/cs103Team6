@@ -1,8 +1,24 @@
-"""
-Main method
-"""
+from transactions import transaction
 
-def getJobRequest() -> int:
+def print_job_menu():
+    """print available jobs prompt"""
+    jobs = ["0. quit",
+    "1. show categories",
+    "2. add category",
+    "3. modify category",
+    "4. show transactions",
+    "5. add transaction",
+    "6. delete transaction",
+    "7. summarize transactions by date",
+    "8. summarize transactions by month",
+    "9. summarize transactions by year",
+    "10. summarize transactions by category",
+    "11. print this menu"]
+    for prompt in jobs:
+        print(prompt)
+
+def get_job_request() -> int:
+    """Get the numerical value for a prompt, return -1 if the input is invalid"""
     usr = input("Enter the number of a task to be completed: ").strip()
     if usr.isdigit():
         usr = int(usr)
@@ -10,28 +26,50 @@ def getJobRequest() -> int:
             return usr
     return -1
 
-  
-if __name__ == '__main__':
-    jobs = ["0. quit",
-        "1. show categories",
-        "2. add category",
-        "3. modify category",
-        "4. show transactions",
-        "5. add transaction",
-        "6. delete transaction",
-        "7. summarize transactions by date",
-        "8. summarize transactions by month",
-        "9. summarize transactions by year",
-        "10. summarize transactions by category",
-        "11. print this menu"]
-    for prompt in jobs:
-        print(prompt)
-    task = 0
+def allocate_jobs(file: str):
+    dbconn = Transaction(url = file)
     while True:
-        task = getJobRequest()
-        if task = -1:
-            print("Invalid input, no such operation exists")
-        else:
+        task = get_job_request()
+        if task == 0:
+            print(dbconn.get_categories())
+        elif task == 1:
+            category = input("Enter a name for the category here: ")
+            dbconn.create_category()
+        elif task == 2:
+            category = input("Enter a category here: ")
+            dbconn.
+        elif task == 3:
             
+        elif task == 4:
+            print(dbconn.get_transactions())
+        elif task == 5:
+            
+        elif task == 6:
+            
+        elif task == 7:
+            print(dbconn.get_transactions_by_day())
+        elif task == 8:
+            print(dbconn.get_transactions_by_month())
+        elif task == 9:
+            print(dbconn.get_transactions_by_year())
+        elif task == 10:
+            category = input("Enter a category here: ")
+            print(dbconn.get_transactions_by_category(category))
+        elif task == 11:
+            print_job_menu()
+        else:
+            print("Invalid input, no such operation exists")
+
+"""
+main method
+"""
+            
+if __name__ == '__main__':
+    print_job_menu()
+    file = input("Enter database name here: ")
+    allocate_jobs(file)
+    
+        
+                
         
             
