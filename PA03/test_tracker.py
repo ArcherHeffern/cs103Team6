@@ -21,8 +21,6 @@ def db_connect(db, sample_data):
     for item in sample_data[1]:
         transaction.run_query("INSERT INTO transactions VALUES (?, ?, ?, ?, ?, ?);", item)
     yield transaction
-    transaction.run_query("DROP TABLE IF EXISTS transactions;", ())
-    transaction.run_query("DROP TABLE IF EXISTS category;", ())
 
 
 def test_get_catagory(db_connect: Transaction, sample_data: tuple):
@@ -57,19 +55,18 @@ def test_delete_transactions(db_connect : Transaction, sample_data : tuple):
     assert db_connect.get_transactions() == [(i+1,) + (data) for i, data in enumerate(sample_data[1][:-1])]
 
 
-def test_get_transactions_by_day(db_connect: Transaction, sample_data: tuple):
-    day = db_connect.get_transactions_by_day()
-    orderedData = [(2, 2, 3, 2021, 3, 20, "A stick of gum"), (3, 4, 2, 2003, 7, 8, "new house"), (1, 35, 1, 2003, 5, 7, "Bought big potato from store")]
-    assert day == [element for element in orderedData]
+def test_get_transactions_by_day(db_connect: Transaction):
+    orderedDay = [(2, 2, 3, 2021, 3, 20, "A stick of gum"), (3, 4, 2, 2003, 7, 8, "new house"), (1, 35, 1, 2003, 5, 7, "Bought big potato from store")]
+    assert db_connect.get_transactions_by_day() == orderedDay
 
-def test_get_transactions_by_month(db_connect: Transaction, sample_data: tuple):
-    month = db_connect.get_transactions_by_month()
-    orderedMonth = ([(35, 1, 2003, 5, 7, "Bought big potato from store"), (2, 3, 2021, 3, 20, "A stick of gum"), (4, 2, 2003, 7, 8, "new house")])
-    assert month == [(i+1,) + (data) for i, data in enumerate(orderedMonth[1][:-3])]
+def test_get_transactions_by_month(db_connect: Transaction):
+    orderedMonth = [(3, 4, 2, 2003, 7, 8, "new house"), (1, 35, 1, 2003, 5, 7, "Bought big potato from store"), (2, 2, 3, 2021, 3, 20, "A stick of gum")]
+    assert db_connect.get_transactions_by_month() == orderedMonth
 
 
-def test_get_transactions_by_year(db_connect: Transaction, sample_data: tuple):
-    pass
+def test_get_transactions_by_year(db_connect: Transaction):
+    orderedYear = [(2, 2, 3, 2021, 3, 20, "A stick of gum"), (3, 4, 2, 2003, 7, 8, "new house"), (1, 35, 1, 2003, 5, 7, "Bought big potato from store")]
+    assert db_connect.get_transactions_by_year() == orderedYear
 
 
 def test_get_transactions_by_catagory(db_connect: Transaction, sample_data: tuple):

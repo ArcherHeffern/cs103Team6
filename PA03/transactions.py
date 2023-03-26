@@ -40,12 +40,12 @@ class Transaction():
 
     def get_transactions_by_year(self):
         """Gets all transactions ordered by year descending"""
-        return self.run_query("SELECT * FROM transactions ORDER BY YEAR, MONTH, DAY DESC;", ())
+        return self.run_query("SELECT rowid, * FROM transactions ORDER BY YEAR DESC, MONTH DESC, DAY DESC;", ())
 
 
     def get_transactions_by_month(self):
         """Gets transactions by month descending"""
-        return self.run_query("SELECT * FROM transactions ORDER BY MONTH, DAY DESC;", ())
+        return self.run_query("SELECT rowid, * FROM transactions ORDER BY MONTH DESC, DAY DESC;", ())
 
 
     def get_transactions_by_day(self):
