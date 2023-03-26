@@ -55,7 +55,9 @@ class Transaction():
     def get_transactions_by_category(self, category: str):
         """get transaction information for specific category name"""
         category_id = self.get_category_id(category)
-        return self.run_query("SELECT * FROM transactions WHERE rowid = (?)", (category_id,))
+        if (len(category_id) == 0):
+            return []
+        return self.run_query("SELECT * FROM transactions WHERE rowid=(?)", (category_id[0],))
 
     def create_transaction(self, transaction: tuple):
         """Creates new Transaction: Takes tuple with all transaction values as input"""
@@ -68,7 +70,7 @@ class Transaction():
     
     def get_category_id(self,category: str):
         """Get the rowid for a specified category"""
-        return self.run_query("SELECT rowid FROM Customers WHERE ContactName = (?)", (category,)) ;
+        return self.run_one_query("SELECT rowid FROM category WHERE name = (?)", (category,)) ;
 
     def delete_transaction(self, category_id):
         """Deletes transaction by rowid"""
@@ -81,5 +83,13 @@ class Transaction():
         con = sqlite3.connect(self.url)
         cur = con.cursor()
         values = cur.execute(query, tuples).fetchall()
+        con.commit()
+        return values
+    
+    def run_one_query(self, query, tuples):
+        """Runs a query"""
+        con = sqlite3.connect(self.url)
+        cur = con.cursor()
+        values = cur.execute(query, tuples).fetchone()
         con.commit()
         return values

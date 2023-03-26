@@ -69,6 +69,7 @@ def test_get_transactions_by_year(db_connect: Transaction):
     assert db_connect.get_transactions_by_year() == orderedYear
 
 
-def test_get_transactions_by_catagory(db_connect: Transaction, sample_data: tuple):
-    pass
+def test_get_transactions_by_catagory(db_connect: Transaction):
+    assert db_connect.get_category_id("15b") == (1,)
+    assert db_connect.get_transactions_by_category("15b") == [(35, 1, 2003, 5, 7, "Bought big potato from store")]
 
