@@ -1,3 +1,4 @@
+"""Runs a repl to simulate transactions"""
 from transactions import Transaction
 
 jobs = ["0. quit",
@@ -22,7 +23,7 @@ def get_job_request() -> int:
     usr = input("Enter the number of a task to be completed: ").strip()
     if usr.isdigit():
         usr = int(usr)
-        if usr >= 0 and usr <= 11:
+        if 0 <= usr <= 11:
             return usr
     return -1
 
@@ -32,16 +33,23 @@ def transactions_to_string(transactions: list):
     for t in transactions:
         if len(t) != 7:
             continue
-        output.append("\n".join(["-"*20, "rowid: " + str(t[0]), "price: $" +str(t[1]), "Category: " + t[2], "Date: " + str(t[4]).strip() + "/" + str(t[5]).strip() + "/" + str(t[3]).strip(), "Description: " + t[6], "-"*20]))
+        output.append("\n".join(["-"*20,
+                                "rowid: " + str(t[0]),
+                                "price: $" +str(t[1]),
+                                "Category: " + t[2],
+                                "Date: " + str(t[4]).strip() + "/" +
+                                str(t[5]).strip() + "/" + str(t[3]).strip(),
+                                "Description: " + t[6], "-"*20]))
     return " ".join(output)
 
 def allocate_jobs():
+    """Runs Repl"""
     dbconn = Transaction()
     while True:
         task = get_job_request()
         if task == 0:
             break
-        elif task == 1:
+        if task == 1:
             # Show categories
             categories = dbconn.get_categories()
             for i, category in enumerate(categories):
@@ -52,7 +60,7 @@ def allocate_jobs():
             category = input("Enter a name for the category here: ")
             try:
                 dbconn.create_category(category)
-            except:
+            except Exception:
                 print("Category already exists")
         elif task == 3:
             # Modify category
@@ -68,7 +76,7 @@ def allocate_jobs():
                     new_name = input("New name: ")
                     try:
                         dbconn.update_category(new_name,category_id)
-                    except:
+                    except Exception:
                         print("Category already exists")
         elif task == 4:
             transactions = dbconn.get_transactions()
@@ -99,22 +107,13 @@ def allocate_jobs():
             category = input("Enter a category here: ")
             try:
                 print(transactions_to_string(dbconn.get_transactions_by_category(category)))
-            except:
+            except Exception:
                 print("Category does not exist")
         elif task == 11:
             print_job_menu()
         else:
             print("Invalid input, no such operation exists")
 
-"""
-main method
-"""
-            
 if __name__ == '__main__':
     print_job_menu()
     allocate_jobs()
-    
-        
-                
-        
-            
