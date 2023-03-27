@@ -1,5 +1,4 @@
 from transactions import Transaction
-import sqlite3
 import pytest
 
 # before each test, we would like to create a transaction object, and pass it in to be used
