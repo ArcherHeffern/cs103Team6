@@ -1,37 +1,42 @@
-# Run the following commands: 
+# PA03
+
+create a transcript of your session as you demonstrate each of the features you have implemented. 
+create a README.md file which describes your app and contains 
+* a script of you running pylint
 ```bash
-pip install pylint pytest
+--------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+
+--------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
 ```
 
-# Project Description
-PA03 - finance tracker - using SQL, pytest, and pylint
+* then running pytest, and 
+```bash
+(cosi103) archers-air:PA03 archerheffern$ pytest -v
+==================================================== test session starts =====================================================
+platform darwin -- Python 3.11.0, pytest-7.1.2, pluggy-1.0.0 -- /Users/archerheffern/miniconda3/envs/cosi103/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/archerheffern/Desktop/Code/Projects/cs103Team6/PA03
+collected 10 items                                                                                                           
 
-Motivation
-Many software projects use SQLite to manage their data and this problem set will give you the experience of building such an app.  Another important process in software engineering is the design of automated tests.  This assignment will ask you to develop a suite of tests for your app. There are other database and testing frameworks, but they are all similar in principle and this assignment will expose you to the core concepts and skills you'll need.
+test_tracker.py::test_get_catagory PASSED                                                                              [ 10%]
+test_tracker.py::test_post_catagory PASSED                                                                             [ 20%]
+test_tracker.py::test_update_catagory PASSED                                                                           [ 30%]
+test_tracker.py::test_show_transactions PASSED                                                                         [ 40%]
+test_tracker.py::test_add_transactions PASSED                                                                          [ 50%]
+test_tracker.py::test_delete_transactions PASSED                                                                       [ 60%]
+test_tracker.py::test_get_transactions_by_day PASSED                                                                   [ 70%]
+test_tracker.py::test_get_transactions_by_month PASSED                                                                 [ 80%]
+test_tracker.py::test_get_transactions_by_year PASSED                                                                  [ 90%]
+test_tracker.py::test_get_transactions_by_catagory PASSED                                                              [100%]
 
+===================================================== 10 passed in 0.07s =====================================================
+```
 
-Learning Objectives -
-* to write SQL queries to perform the CRUD operations (Create, Read, Update, Delete) and aggregation(with SQLite3)
-* to develop automated testing (with pytest)
+* then running tracker.py and demonstrating all of the features you added
 
-Steps:
-1) create a git repository to contain the pa03 code, which you then push to github
-2) add all members of the team as collaborators
-3) create a Python class Transaction in a new file transaction.py which will store financial transactions with the fields. 
-It should have an __init__ method where you pass in the filename for the database to be used (e.g. tracker.db) 
-and each transaction should have the following fields stored in a SQL table called transactions.
-
-'item #',
-'amount',
-'category',
-'date',
-'description'
-
-It should be similar to the Todolist ORM from Lesson 19 in class. It will allow the user to read and update the database as need.
-The transaction class should not do any printing!! 
-
-Create a file tracker.py which offers the user the following options and makes calls to the Transaction class to update the database.
-
+(cosi103) archers-air:PA03 archerheffern$ python tracker.py 
 0. quit
 1. show categories
 2. add category
@@ -44,26 +49,100 @@ Create a file tracker.py which offers the user the following options and makes c
 9. summarize transactions by year
 10. summarize transactions by category
 11. print this menu
-
-The tracker.py program should not have any SQL calls and should be similar is structure to the todo2.py program from Lesson19
-
-Testing with pytest -- 
-create a file, test_transaction.py, and addtests to it for each method in the Transaction class. 
-It is a good idea to add a test each time you implement a feature. 
-You are testing the Transaction class, not the tracker.py user interface code.
-
-Linting with pylint --
-Use pylint with transactions.py and tracker.py and eliminate all of the style errors that it flags. Try to get 100% compliance.
-
-Collaborating with github -- 
-regularly commit your changes and push them to github, every team member should push some changes of their own. I suggest you have each person implement a few of the options in tracker.py and everyone collaborate on the operations needed for the ORM transaction.py
-
-Creating a transcript - 
-create a transcript of your session as you demonstrate each of the features you have implemented. 
-create a README.md file which describes your app and contains 
-* a script of you running pylint, and 
-* then running pytest, and 
-* then running tracker.py and demonstrating all of the features you added
-
-Try to make sure that everyone gets to work on some substantial part of the project.
- 
+Enter the number of a task to be completed: 1
+hello   fishing turtle  asdkjf  asdfadsfs
+Enter the number of a task to be completed: 2
+Enter a name for the category here: newcatagory
+Enter the number of a task to be completed: 1
+hello   fishing turtle  asdkjf  asdfadsfs       newcatagory
+Enter the number of a task to be completed: 3
+Which category would you like to rename: newcatagory
+New name: newnewcatagory
+Enter the number of a task to be completed: 1
+hello   fishing turtle  asdkjf  asdfadsfs       newnewcatagory
+Enter the number of a task to be completed: 4
+--------------------
+rowid: 2
+price: $50
+Category: hello
+Date: 20/20/2000
+Description: this is my test transaction
+--------------------
+Enter the number of a task to be completed: 5
+Enter amount here: 50
+Enter category name here: hello
+Enter year here: 2021
+Enter month here: 3
+Enter day here: 17
+Enter a description here: this is my test transaction 2
+Enter the number of a task to be completed: 4
+--------------------
+rowid: 2
+price: $50
+Category: hello
+Date: 20/20/2000
+Description: this is my test transaction
+-------------------- --------------------
+rowid: 3
+price: $50
+Category: hello
+Date: 3/17/2021
+Description: this is my test transaction 2
+--------------------
+Enter the number of a task to be completed: 6
+Enter the transaction to be deleted here: 2
+Enter the number of a task to be completed: 4
+--------------------
+rowid: 3
+price: $50
+Category: hello
+Date: 3/17/2021
+Description: this is my test transaction 2
+--------------------
+Enter the number of a task to be completed: 7
+--------------------
+rowid: 3
+price: $50
+Category: hello
+Date: 3/17/2021
+Description: this is my test transaction 2
+--------------------
+Enter the number of a task to be completed: 8
+--------------------
+rowid: 3
+price: $50
+Category: hello
+Date: 3/17/2021
+Description: this is my test transaction 2
+--------------------
+Enter the number of a task to be completed: 9
+--------------------
+rowid: 3
+price: $50
+Category: hello
+Date: 3/17/2021
+Description: this is my test transaction 2
+--------------------
+Enter the number of a task to be completed: 10
+Enter a category here: hello
+--------------------
+rowid: 3
+price: $50
+Category: hello
+Date: 3/17/2021
+Description: this is my test transaction 2
+--------------------
+Enter the number of a task to be completed: 11
+0. quit
+1. show categories
+2. add category
+3. modify category
+4. show transactions
+5. add transaction
+6. delete transaction
+7. summarize transactions by date
+8. summarize transactions by month
+9. summarize transactions by year
+10. summarize transactions by category
+11. print this menu
+Enter the number of a task to be completed: 0

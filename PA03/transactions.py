@@ -63,7 +63,7 @@ class Transaction():
         category_id = self.get_category_id(category)
         if len(category_id) == 0:
             return []
-        return self.run_query("SELECT * FROM transactions WHERE rowid=(?)", (category_id[0],))
+        return self.run_query("SELECT * FROM transactions WHERE category_id=(?)", (category_id[0],))
 
     def create_transaction(self, transaction: tuple):
         """Archer - Creates new Transaction: Takes tuple with all transaction values as input"""
