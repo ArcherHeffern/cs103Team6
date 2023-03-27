@@ -1,8 +1,6 @@
 from transactions import Transaction
 
-def print_job_menu():
-    """print available jobs prompt"""
-    jobs = ["0. quit",
+jobs = ["0. quit",
     "1. show categories",
     "2. add category",
     "3. modify category",
@@ -14,8 +12,10 @@ def print_job_menu():
     "9. summarize transactions by year",
     "10. summarize transactions by category",
     "11. print this menu"]
-    for prompt in jobs:
-        print(prompt)
+
+def print_job_menu():
+    """print available jobs prompt"""
+    print("\n".join(jobs))
 
 def get_job_request() -> int:
     """Get the numerical value for a prompt, return -1 if the input is invalid"""
@@ -26,6 +26,15 @@ def get_job_request() -> int:
             return usr
     return -1
 
+def transactions_to_string(transactions: list):
+    """Takes a tuple of transactions as input and returns string representation"""
+    output = []
+    for t in transactions:
+        if len(t) != 7:
+            continue
+        output.append("\n".join(["-"*20, "rowid: " + str(t[0]), "price: $" +str(t[1]), "Category: " + t[2], "Date: " + str(t[4]).strip() + "/" + str(t[5]).strip() + "/" + str(t[3]).strip(), "Description: " + t[6], "-"*20]))
+    return " ".join(output)
+
 def allocate_jobs():
     dbconn = Transaction()
     while True:
@@ -33,20 +42,44 @@ def allocate_jobs():
         if task == 0:
             break
         elif task == 1:
-            print(dbconn.get_categories())
+            # Show categories
+            categories = dbconn.get_categories()
+            for i, category in enumerate(categories):
+                categories[i] = str(category[1])
+            print("\t".join(categories))
         elif task == 2:
+            # Add category
             category = input("Enter a name for the category here: ")
-            dbconn.create_category(category)
+            try:
+                dbconn.create_category(category)
+            except:
+                print("Category already exists")
         elif task == 3:
-            category = input("Enter a category here: ")
-            category_id = dbconn.get_category_id(category)
-            new_name = input("Enter a new name for the category here: ")
-            dbconn.update_category(new_name,category_id)
+            # Modify category
+            category = input("Which category would you like to rename: ")
+            if len(category) == 0:
+                print("Category does not exist")
+            else:
+                category_id = dbconn.get_category_id(category)
+                if len(category_id) == 0:
+                    print("Category does not exist")
+                else:
+                    category_id = category_id[0]
+                    new_name = input("New name: ")
+                    try:
+                        dbconn.update_category(new_name,category_id)
+                    except:
+                        print("Category already exists")
         elif task == 4:
-            print(dbconn.get_transactions())
+            transactions = dbconn.get_transactions()
+            print(transactions_to_string(transactions))
         elif task == 5:
             amount = int(input("Enter amount here: "))
             category_id = dbconn.get_category_id(input("Enter category name here: "))
+            if len(category_id) == 0:
+                print("Category does not exist")
+                continue
+            category_id = category_id[0]
             year = int(input("Enter year here: "))
             month = int(input("Enter month here: "))
             day = int(input("Enter day here: "))
@@ -57,14 +90,17 @@ def allocate_jobs():
             tranaction = input("Enter the transaction to be deleted here: ")
             dbconn.delete_transaction(tranaction)
         elif task == 7:
-            print(dbconn.get_transactions_by_day())
+            print(transactions_to_string(dbconn.get_transactions_by_day()))
         elif task == 8:
-            print(dbconn.get_transactions_by_month())
+            print(transactions_to_string(dbconn.get_transactions_by_month()))
         elif task == 9:
-            print(dbconn.get_transactions_by_year())
+            print(transactions_to_string(dbconn.get_transactions_by_year()))
         elif task == 10:
             category = input("Enter a category here: ")
-            print(dbconn.get_transactions_by_category(category))
+            try:
+                print(transactions_to_string(dbconn.get_transactions_by_category(category)))
+            except:
+                print("Category does not exist")
         elif task == 11:
             print_job_menu()
         else:

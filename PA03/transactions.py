@@ -6,6 +6,7 @@ class Transaction():
     def __init__(self, debug: bool = False, url: str='transaction.db'):
         """debug: if true, will reset all tables"""
         self.url = url
+        self.query_transactions: str = "SELECT transactions.rowid, amount, category.name, year, month, day, description FROM transactions INNER JOIN category ON transactions.category_id=category.rowid {};"
         if debug:
             # drop all tables
             self.run_query("DROP TABLE IF EXISTS transactions;", ())
@@ -35,22 +36,22 @@ class Transaction():
 
     def get_transactions(self):
         """Gets all transactions"""
-        return self.run_query("SELECT rowid, * FROM transactions;", ())
+        return self.run_query(self.query_transactions.format(""), ())
 
 
     def get_transactions_by_year(self):
         """Gets all transactions ordered by year descending"""
-        return self.run_query("SELECT rowid, * FROM transactions ORDER BY YEAR DESC, MONTH DESC, DAY DESC;", ())
+        return self.run_query(self.query_transactions.format("ORDER BY YEAR DESC, MONTH DESC, DAY DESC"), ())
 
 
     def get_transactions_by_month(self):
         """Gets transactions by month descending"""
-        return self.run_query("SELECT rowid, * FROM transactions ORDER BY MONTH DESC, DAY DESC;", ())
+        return self.run_query(self.query_transactions.format("ORDER BY MONTH DESC, DAY DESC"), ())
 
 
     def get_transactions_by_day(self):
         """Gets transactions ordered by day descending"""
-        return self.run_query("SELECT rowid, * FROM transactions ORDER BY DAY DESC;", ())
+        return self.run_query(self.query_transactions.format("ORDER BY DAY DESC"), ())
 
     def get_transactions_by_category(self, category: str):
         """get transaction information for specific category name"""
