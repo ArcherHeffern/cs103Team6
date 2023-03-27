@@ -15,11 +15,11 @@ jobs = ["0. quit",
     "11. print this menu"]
 
 def print_job_menu():
-    """print available jobs prompt"""
+    """Archer and Efren - print available jobs prompt"""
     print("\n".join(jobs))
 
 def get_job_request() -> int:
-    """Get the numerical value for a prompt, return -1 if the input is invalid"""
+    """Efren - Get the numerical value for a prompt, return -1 if the input is invalid"""
     usr = input("Enter the number of a task to be completed: ").strip()
     if usr.isdigit():
         usr = int(usr)
@@ -28,7 +28,7 @@ def get_job_request() -> int:
     return -1
 
 def transactions_to_string(transactions: list):
-    """Takes a tuple of transactions as input and returns string representation"""
+    """Archer - Takes a tuple of transactions as input and returns string representation"""
     output = []
     for t in transactions:
         if len(t) != 7:
@@ -43,7 +43,7 @@ def transactions_to_string(transactions: list):
     return " ".join(output)
 
 def allocate_jobs():
-    """Runs Repl"""
+    """Archer and Efren - Runs Repl"""
     dbconn = Transaction()
     while True:
         task = get_job_request()
@@ -115,5 +115,6 @@ def allocate_jobs():
             print("Invalid input, no such operation exists")
 
 if __name__ == '__main__':
+    """Efren"""
     print_job_menu()
     allocate_jobs()
