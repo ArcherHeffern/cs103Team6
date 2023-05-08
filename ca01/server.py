@@ -42,7 +42,7 @@ def archer():
 @app.route('/efren', methods=['GET', 'POST'])
 def efren():
     if request.method == 'GET':
-        return render_template("form.html", name='Efren', prompt="Write a poem about a person named __ living in a city __ who likes to __.", route='/efren')
+        return render_template("form.html", name='Efren', prompt="Write a poem about a person who likes to __.", route='/efren')
     elif request.method == 'POST':
         return gptAPI.efren_prompt(request.form['prompt'])
     else:
